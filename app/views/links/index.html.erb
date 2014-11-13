@@ -1,0 +1,15 @@
+<h2 align="center">Here is where all the links go!</h2>
+
+<% if user_signed_in? %>
+	<div>
+		<%= link_to 'Add a new link', new_link_path %><br>
+	</div>
+<% end %>
+
+<% @links.each do |link| %>
+	<div align="center">
+		<%= link_to link.title, link.url %>
+		added by <%= link.user.username %>, 
+		<%= time_ago_in_words(link.created_at) %> ago.<br>
+	</div>
+<% end %>
