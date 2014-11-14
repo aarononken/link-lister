@@ -1,5 +1,12 @@
-You found me!<br>
+<h2>User Profile</h2>
 
-This is where a user can see their profile!
+<div>
+	Username: <%= @user.username %><br>
+	Email: <%= @user.email %><br>
+	Bio: <%= @user.bio %><br>
+	Location: <%= @user.location %><br>
+</div>
 
-<%= link_to 'Edit', edit_user_registration_path %>
+<% if user_signed_in? && @user == current_user %>
+	<br><%= link_to 'Edit Profile', edit_user_registration_path %>
+<% end %>
