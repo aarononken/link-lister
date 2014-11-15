@@ -1,13 +1,10 @@
 <h2>User Index</h2>
 
 <table>
-	<tr>
-		<th>Username</th>
-		<th>Email</th>
-	</tr>
 <tbody>
 <% @users.each do |user| %>
 	<tr>
+    <td><%= image_tag avatar_url(user) %><td>
 		<td><%= user.username %></td>
 		<td><%= user.email %></td>
 	</tr>
