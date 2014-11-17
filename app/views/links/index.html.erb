@@ -8,8 +8,14 @@
 
 <% @links.each do |link| %>
 	<div align="center">
+    <%= link.score %>
 		<%= link_to link.title, link.url %>
-		added by <%= link.user.username %>, 
-		<%= time_ago_in_words(link.created_at) %> ago.<br>
+    added by <%= link_to link.user.username %>, 
+		<%= time_ago_in_words(link.created_at) %> ago.
+    <% if signed_in? && current_user != link.user %>
+      <%= link_to "upvote", like_link_path(link), method: :put %>
+      <%= link_to "downvote", dislike_link_path(link), method: :put %>
+    <% end %>
+    <br>
 	</div>
 <% end %>
