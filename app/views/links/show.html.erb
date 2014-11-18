@@ -1,3 +1,18 @@
-Here is where one link goes!
+<p>Title: <%= @link.title %></p>
 
-<%= link.url %>
+<p>URL: <%= link_to @link.url %></p>
+
+<% @link.comments.each do |comment| %>
+	<div>
+	<%= comment.user.email %> says: <%= comment.body %>
+	<% if comment.user == current_user %>
+		<%= link_to "Delete", comment_path(comment), method: :delete %>
+	<% end %>
+	</div>
+<% end %>
+
+<%= form_for @link.comments.build do |form| %>
+	<%= form.hidden_field :link_id %>
+	<%= form.text_area :body %>
+	<%= form.submit %>
+<% end %>

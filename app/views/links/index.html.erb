@@ -1,13 +1,7 @@
-<h2 align="center">Here is where all the links go!</h2>
-
-<% if user_signed_in? %>
-	<div>
-		<%= link_to 'Add a new link', new_link_path %><br>
-	</div>
-<% end %>
+<h2>Here is where all the links go!</h2>
 
 <% @links.each do |link| %>
-	<div align="center">
+	<div>
     <%= link.score %>
 		<%= link_to link.title, link.url %>
     added by <%= link_to link.user.username, user_path(link.user.id) %>, 
@@ -17,5 +11,13 @@
       <%= link_to "downvote", dislike_link_path(link), method: :put %>
     <% end %>
     <br>
+	</div>
+<% end %>
+
+<br>
+
+<% if user_signed_in? %>
+	<div>
+		<%= link_to 'Add a new link', new_link_path %><br>
 	</div>
 <% end %>

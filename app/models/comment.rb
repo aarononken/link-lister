@@ -1,21 +1,16 @@
 # == Schema Information
 #
-# Table name: links
+# Table name: comments
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  url        :text
-#  title      :string
+#  link_id    :integer
+#  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class Link < ActiveRecord::Base
+class Comment < ActiveRecord::Base
+	belongs_to :link
 	belongs_to :user
-	has_many :comments
-	acts_as_votable
-  
-  def score
-    self.get_upvotes.size - self.get_downvotes.size
-  end
 end
