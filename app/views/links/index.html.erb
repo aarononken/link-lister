@@ -2,15 +2,20 @@
 
 <% @links.each do |link| %>
 	<div>
+	
     <%= link.score %>
-		<%= link_to link.title, link.url %>
-    added by <%= link_to link.user.username, user_path(link.user.id) %>, 
-		<%= time_ago_in_words(link.created_at) %> ago.
+	<%= link_to link.title, link.url %>
+    added by
+    <%= link_to link.user.username, user_path(link.user.id) %>, 
+	<%= time_ago_in_words(link.created_at) %> 
+	ago.
+
     <% if signed_in? && current_user != link.user %>
       <%= link_to "upvote", like_link_path(link), method: :put %>
       <%= link_to "downvote", dislike_link_path(link), method: :put %>
     <% end %>
-    <br>
+      | <%= link_to "Details", link_path(link.id) %>
+      <br>
 	</div>
 <% end %>
 
