@@ -6,6 +6,8 @@
 	Email: <%= @user.email %><br>
 	Bio: <%= @user.bio %><br>
 	Location: <%= @user.location %><br>
+  Links Submitted: <%= @user.links_count %><br>
+  Total Comments: <%= @user.comments_count %><br>
 </div>
 
 <% if user_signed_in? && @user == current_user %>

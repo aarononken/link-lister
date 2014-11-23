@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+	before_action :require_user, only: [:create]
+	before_action :require_admin, only: [:destroy]
 
 	def create
 		@comment = Comment.new(comment_params)

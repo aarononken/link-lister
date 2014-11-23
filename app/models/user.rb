@@ -18,6 +18,7 @@
 #  bio                    :text
 #  location               :string
 #  username               :string
+#  links_count            :integer          default("0"), not null
 #
 
 class User < ActiveRecord::Base
