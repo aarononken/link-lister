@@ -11,7 +11,7 @@
 #
 
 class Comment < ActiveRecord::Base
-  validates :body, presence: true
+    validates :body, presence: true
 	belongs_to :link
 	belongs_to :user, counter_cache: true
 end

@@ -1,19 +1,19 @@
 class LinksController < ApplicationController
 
-  def upvote
-    @link = Link.find(params[:id])
-    @link.upvote_by current_user
-    redirect_to links_path
-  end
-  
-  def downvote
-    @link = Link.find(params[:id])
-    @link.downvote_by current_user
-    redirect_to links_path
-  end
+	def upvote
+		@link = Link.find(params[:id])
+		@link.upvote_by current_user
+		redirect_to links_path
+	end
+
+	def downvote
+		@link = Link.find(params[:id])
+		@link.downvote_by current_user
+		redirect_to links_path
+	end
   
 	def index
-		@links = Link.all
+		@links = Link.order(cached_votes_score: :desc)
 	end
 
 	def new
@@ -36,7 +36,7 @@ class LinksController < ApplicationController
 	end
 
 	def link_params
-    	params.require(:link).permit(:title, :url)
+		params.require(:link).permit(:title, :url)
 	end
   
 end

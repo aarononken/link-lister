@@ -3,7 +3,7 @@
 <% @links.each do |link| %>
 	<div>
 	
-    <%= link.score %>
+    <%= link.cached_votes_score %>
 	<%= link_to link.title, link.url %>
     added by
     <%= link_to link.user.username, user_path(link.user.id) %>, 
