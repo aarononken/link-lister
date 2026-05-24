@@ -1,20 +1,36 @@
-<p>Score: <%= @link.score %></p>
+<h1><%= @link.title %></h1>
 
-<p>Title: <%= @link.title %></p>
+<p class="score">Score: <%= @link.score %></p>
+<p><%= link_to @link.url, @link.url, target: "_blank", rel: "noopener" %></p>
+<p class="meta">
+  Posted by <%= link_to @link.user.username, user_path(@link.user) %>
+  <%= time_ago_in_words(@link.created_at) %> ago
+</p>
 
-<p>URL: <%= link_to @link.url %></p>
+<%= link_to "← Back to Links", links_path %>
+
+<h2>Comments (<%= @link.comments.count %>)</h2>
 
 <% @link.comments.each do |comment| %>
-	<div>
-	<%= comment.user %> says: <%= comment.body %>
-	<% if comment.user == current_user %>
-		<%= link_to "Delete", comment_path(comment), method: :delete %>
-	<% end %>
-	</div>
+  <div class="comment">
+    <p><strong><%= link_to comment.user.username, user_path(comment.user) %></strong> says:</p>
+    <p><%= comment.body %></p>
+    <p class="meta"><%= time_ago_in_words(comment.created_at) %> ago</p>
+    <% if user_signed_in? && (comment.user == current_user || current_user.admin?) %>
+      <%= button_to "Delete", comment_path(comment), method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </div>
 <% end %>
 
-<%= form_for @link.comments.build do |form| %>
-	<%= form.hidden_field :link_id %>
-	<%= form.text_area :body %>
-	<%= form.submit %>
+<% if user_signed_in? %>
+  <h3>Add a Comment</h3>
+  <%= form_with(model: @link.comments.build, local: true) do |form| %>
+    <%= form.hidden_field :link_id %>
+    <div>
+      <%= form.text_area :body, rows: 4, placeholder: "Write your comment..." %>
+    </div>
+    <%= form.submit "Post Comment" %>
+  <% end %>
+<% else %>
+  <p><%= link_to "Sign in", new_user_session_path %> to post a comment.</p>
 <% end %>

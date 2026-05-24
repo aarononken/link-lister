@@ -1,13 +1,28 @@
-<h1>Create a new link!</h1>
+<h1>Post a New Link</h1>
 
-<%= form_for(@link) do |f| %>
+<%= form_with(model: @link, local: true) do |f| %>
+  <% if @link.errors.any? %>
+    <div class="errors">
+      <h3><%= pluralize(@link.errors.count, "error") %> prevented this link from being saved:</h3>
+      <ul>
+        <% @link.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-	<%= f.label :title %><br>
-	<%= f.text_field :title %><br />
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, placeholder: "Link title" %>
+  </div>
 
-	<%= f.label :url %><br>
-	<%= f.text_field :url %><br />
+  <div class="field">
+    <%= f.label :url %>
+    <%= f.url_field :url, placeholder: "https://example.com" %>
+  </div>
 
-	<%= f.submit %>
-
+  <%= f.submit "Post Link" %>
 <% end %>
+
+<%= link_to "← Cancel", links_path %>

@@ -11,12 +11,15 @@
 #  cached_votes_score :integer          default("0")
 #
 
-class Link < ActiveRecord::Base
-    belongs_to :user, counter_cache: true
-	has_many :comments
-	acts_as_votable
-  
+class Link < ApplicationRecord
+  belongs_to :user, counter_cache: true
+  has_many :comments, dependent: :destroy
+  acts_as_votable
+
+  validates :title, presence: true
+  validates :url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "must be a valid URL" }
+
   def score
-    self.get_upvotes.size - self.get_downvotes.size
+    get_upvotes.size - get_downvotes.size
   end
 end

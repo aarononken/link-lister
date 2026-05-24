@@ -10,8 +10,8 @@
 #  updated_at :datetime         not null
 #
 
-class Comment < ActiveRecord::Base
-    validates :body, presence: true
-	belongs_to :link
-	belongs_to :user, counter_cache: true
+class Comment < ApplicationRecord
+  validates :body, presence: true
+  belongs_to :link
+  belongs_to :user, counter_cache: true
 end

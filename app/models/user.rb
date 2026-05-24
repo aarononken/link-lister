@@ -22,7 +22,7 @@
 #  comments_count         :integer          default("0"), not null
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -30,9 +30,9 @@ class User < ActiveRecord::Base
 
   validates :username, :email, uniqueness: true
   validates :username, :email, presence: true
-  
-  has_many :links
-  has_many :comments
+
+  has_many :links, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   acts_as_voter
 end
