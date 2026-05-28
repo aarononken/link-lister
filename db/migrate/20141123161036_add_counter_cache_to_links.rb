@@ -1,4 +1,4 @@
-class AddCounterCacheToLinks < ActiveRecord::Migration
+class AddCounterCacheToLinks < ActiveRecord::Migration[8.0]
   def change
     add_column :links, :cached_votes_score, :integer, default: 0
     

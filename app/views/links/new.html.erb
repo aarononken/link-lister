@@ -1,13 +1,19 @@
-<h1>Create a new link!</h1>
+<h1>Submit a link</h1>
 
-<%= form_for(@link) do |f| %>
+<%= form_with model: @link do |f| %>
+  <% if @link.errors.any? %>
+    <ul>
+      <% @link.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-	<%= f.label :title %><br>
-	<%= f.text_field :title %><br />
+  <%= f.label :title %><br>
+  <%= f.text_field :title %><br>
 
-	<%= f.label :url %><br>
-	<%= f.text_field :url %><br />
+  <%= f.label :url %><br>
+  <%= f.text_field :url, placeholder: "https://..." %><br>
 
-	<%= f.submit %>
-
+  <%= f.submit "Submit" %>
 <% end %>
