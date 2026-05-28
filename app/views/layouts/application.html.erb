@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>SocialNetwork</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>LinkLister</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <nav>
+      <% if user_signed_in? %>
+        Signed in as <strong><%= current_user.username %></strong> |
+        <%= link_to "My Profile", user_path(current_user) %> |
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, form: { style: "display:inline" } %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path %> |
+        <%= link_to "Sign Up", new_user_registration_path %>
+      <% end %>
+    </nav>
 
-<% if user_signed_in? %>
-  You are signed in! | <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
-<% else %>
-  <%= link_to 'Login', new_user_session_path %> | 
-  <%= link_to 'Sign Up', new_user_registration_path %>
-<% end %><br />
+    <% if notice %>
+      <p style="color:green"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p style="color:red"><%= alert %></p>
+    <% end %>
 
-<%= yield %>
-
-</body>
+    <%= yield %>
+  </body>
 </html>

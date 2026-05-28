@@ -1,4 +1,4 @@
-class AddCommentCountToUser < ActiveRecord::Migration
+class AddCommentCountToUser < ActiveRecord::Migration[8.0]
   def change
     add_column :users, :comments_count, :integer, default: 0, null: false
     

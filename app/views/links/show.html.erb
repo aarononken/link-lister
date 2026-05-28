@@ -1,20 +1,23 @@
+<h2><%= link_to @link.title, @link.url, target: "_blank", rel: "noopener" %></h2>
+
 <p>Score: <%= @link.score %></p>
 
-<p>Title: <%= @link.title %></p>
-
-<p>URL: <%= link_to @link.url %></p>
+<h3>Comments</h3>
 
 <% @link.comments.each do |comment| %>
-	<div>
-	<%= comment.user %> says: <%= comment.body %>
-	<% if comment.user == current_user %>
-		<%= link_to "Delete", comment_path(comment), method: :delete %>
-	<% end %>
-	</div>
+  <div>
+    <strong><%= comment.user.username %></strong>: <%= comment.body %>
+    <% if user_signed_in? && comment.user == current_user %>
+      <%= button_to "Delete", comment_path(comment), method: :delete, data: { turbo_confirm: "Delete this comment?" } %>
+    <% end %>
+  </div>
 <% end %>
 
-<%= form_for @link.comments.build do |form| %>
-	<%= form.hidden_field :link_id %>
-	<%= form.text_area :body %>
-	<%= form.submit %>
+<% if user_signed_in? %>
+  <h4>Add a comment</h4>
+  <%= form_with model: [@link, Comment.new] do |f| %>
+    <%= f.hidden_field :link_id, value: @link.id %>
+    <%= f.text_area :body %><br>
+    <%= f.submit "Post" %>
+  <% end %>
 <% end %>

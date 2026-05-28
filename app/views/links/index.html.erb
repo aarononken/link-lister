@@ -1,28 +1,23 @@
-<h2>Here is where all the links go!</h2>
+<h2>Links</h2>
 
 <% @links.each do |link| %>
-	<div>
-	
-    <%= link.cached_votes_score %>
-	<%= link_to link.title, link.url %>
-    added by
-    <%= link_to link.user.username, user_path(link.user.id) %>, 
-	<%= time_ago_in_words(link.created_at) %> 
-	ago.
+  <div>
+    <strong><%= link.cached_votes_score %></strong>
+    <%= link_to link.title, link.url, target: "_blank", rel: "noopener" %>
+    — submitted by <%= link_to link.user.username, user_path(link.user) %>,
+    <%= time_ago_in_words(link.created_at) %> ago
 
-    <% if signed_in? && current_user != link.user %>
-      <%= link_to "upvote", like_link_path(link), method: :put %>
-      <%= link_to "downvote", dislike_link_path(link), method: :put %>
+    <% if user_signed_in? && current_user != link.user %>
+      <%= button_to "▲", like_link_path(link), method: :put %>
+      <%= button_to "▼", dislike_link_path(link), method: :put %>
     <% end %>
-      | <%= link_to "Details", link_path(link.id) %>
-      <br>
-	</div>
+
+    | <%= link_to "Details", link_path(link) %>
+  </div>
 <% end %>
 
 <br>
 
 <% if user_signed_in? %>
-	<div>
-		<%= link_to 'Add a new link', new_link_path %><br>
-	</div>
+  <%= link_to "Submit a link", new_link_path %>
 <% end %>
